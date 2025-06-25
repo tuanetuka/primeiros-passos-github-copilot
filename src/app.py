@@ -38,6 +38,45 @@ activities = {
       "schedule": "Segundas, quartas e sextas, 14h - 15h",
       "max_participants": 30,
       "participants": ["john@mergington.edu", "olivia@mergington.edu"]
+   },
+   # Esportivas
+   "Futebol": {
+      "description": "Participe do time de futebol da escola e jogue campeonatos",
+      "schedule": "Terças e quintas, 16h - 17h30",
+      "max_participants": 22,
+      "participants": ["lucas@mergington.edu", "marcos@mergington.edu"]
+   },
+   "Vôlei": {
+      "description": "Aulas e treinos de vôlei para todos os níveis",
+      "schedule": "Quartas e sextas, 15h - 16h30",
+      "max_participants": 18,
+      "participants": ["ana@mergington.edu", "carla@mergington.edu"]
+   },
+   # Artísticas
+   "Teatro": {
+      "description": "Oficina de teatro e apresentações culturais",
+      "schedule": "Segundas e quartas, 16h - 17h30",
+      "max_participants": 15,
+      "participants": ["beatriz@mergington.edu", "rafael@mergington.edu"]
+   },
+   "Clube de Artes": {
+      "description": "Desenho, pintura e outras atividades artísticas",
+      "schedule": "Sábados, 10h - 12h",
+      "max_participants": 20,
+      "participants": ["lara@mergington.edu", "gustavo@mergington.edu"]
+   },
+   # Intelectuais
+   "Olimpíada de Matemática": {
+      "description": "Preparação para olimpíadas de matemática",
+      "schedule": "Terças, 17h - 18h",
+      "max_participants": 25,
+      "participants": ["paulo@mergington.edu", "aline@mergington.edu"]
+   },
+   "Clube de Leitura": {
+      "description": "Leitura e discussão de livros clássicos e contemporâneos",
+      "schedule": "Quintas, 16h - 17h",
+      "max_participants": 18,
+      "participants": ["juliana@mergington.edu", "felipe@mergington.edu"]
    }
 }
 
@@ -62,6 +101,10 @@ def signup_for_activity(activity_name: str, email: str):
     # Get the specificy activity
     activity = activities[activity_name]
 
+    # Validar se o estudante já está inscrito
+    if email in activity["participants"]:
+       raise HTTPException(status_code=400, detail=f"{email} já está inscrito(a) em {activity_name}")
+    
     # Add student
     activity["participants"].append(email)
     return {"message": f"{email} inscrito(a) em {activity_name} com sucesso"}
